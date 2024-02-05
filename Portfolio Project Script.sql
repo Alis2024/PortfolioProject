@@ -113,7 +113,22 @@ FROM
     JOIN [DataWarehousingAssignment].[dbo].[DimCustomer] c ON rs.CustomerCode = c.CustomerCode
     JOIN [DataWarehousingAssignment].[dbo].[DimPaymentType] pt ON rs.PaymentTypeID = pt.PaymentTypeID
 	JOIN [DataWarehousingAssignment].[dbo].[DimSellingChannel] sc ON rs.SellingChannel = sc.SellingChannelCode
-
 	
+--- Finding the details of Customers where profit was greater that 10
+Select d.CustomerKey, d.FirstName, d.LastName, d.BirthDate, c.Profit
+	from DimCustomer d
+	Join CustomerSalesTransactionsFact c
+	On d.CustomerKey =c.Customerkey
+    where Profit > 10;
+
+ --- Finding the details of customers who spent more than 30, are male, and order by the highest total cost first
+
+	select d.CustomerKey, d.FirstName, d.LastName, d.gender, d.city, c.TotalCost
+	from DimCustomer d
+	join CustomerSalesTransactionsFact c
+	on d.CustomerKey = c.Customerkey
+	where TotalCost > 30
+	And Gender = 'M'
+	order by c.Totalcost DESC;
 	
 
